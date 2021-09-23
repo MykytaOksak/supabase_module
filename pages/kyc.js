@@ -13,11 +13,7 @@ export default function Profile() {
   const [city, setCity] = useState("")
   const [user, setUser] = useState({})
   const [submitted, setSubmitted] = useState(false)
-
   const router = useRouter()
-  useEffect(() => {
-    fetchProfile()
-  }, [])
 
   async function fetchProfile() {
     const profileData = await supabase.auth.user()
@@ -27,6 +23,10 @@ export default function Profile() {
       setProfile(profileData)
     }
   }
+  
+  useEffect(() => {
+    fetchProfile()
+  }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -68,7 +68,7 @@ export default function Profile() {
     return (
       <div className={styles.container}>
           <h1>Information has been sent, await a response</h1>
-          <a className={styles.signUpLink}>don't have an account? ➞</a>
+          <a className={styles.signUpLink}>don&apos;t have an account? ➞</a>
       </div>
     )
   }

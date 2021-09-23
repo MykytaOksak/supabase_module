@@ -131,7 +131,7 @@ export default function SignIn() {
                                 Sign In
                             </button> 
                             <span style={{marginTop: 5}}>
-                                don't have an account?{' '}
+                                don&apos;t have an account?{' '}
                                 <a 
                                     className={styles.signUpLink}
                                     onClick={linkClickHandle}>

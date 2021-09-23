@@ -1,3 +1,6 @@
+ARG GIT_COMMIT=unspecified
+LABEL git_commit=$GIT_COMMIT
+
 #Creates a layer from node:alpine image.
 FROM node:alpine
 

@@ -1,8 +1,8 @@
-ARG GIT_COMMIT=unspecified
-LABEL git_commit=$GIT_COMMIT
-
 #Creates a layer from node:alpine image.
 FROM node:alpine
+
+ARG GIT_COMMIT=unspecified
+LABEL git_commit=$GIT_COMMIT
 
 #Creates directories
 RUN mkdir -p /usr/src/app

@@ -1,0 +1,22 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build-and-verify
+  image: node
+  commands:
+  - npm install
+  - npm run build
+
+- name: build-docker-image
+  image: plugins/docker
+  settings:
+    username: mykytaoksak
+    password: f72mCVg2G8iZLsM
+    repo: mykytaoksak/supabase_next_auth
+
+trigger:
+  branch:
+  - master
+  event:
+  - push

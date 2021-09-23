@@ -7,6 +7,7 @@ steps:
   commands:
   - npm install
   - npm run build
+  - echo $(git log -1 --format=%h) > .tags
 
 - name: build-docker-image
   image: plugins/docker

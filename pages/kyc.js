@@ -68,7 +68,6 @@ export default function Profile() {
     return (
       <div className={styles.container}>
           <h1>Information has been sent, await a response</h1>
-          <a className={styles.signUpLink}>don&apos;t have an account? ➞</a>
       </div>
     )
   }

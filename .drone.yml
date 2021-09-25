@@ -7,6 +7,7 @@ steps:
   commands:
   - npm install
   - npm run build
+  - echo $(git log -1 --format=%h) > .tags
 
 - name: build-docker-image
   image: plugins/docker
@@ -14,7 +15,8 @@ steps:
     username: mykytaoksak
     password: f72mCVg2G8iZLsM
     repo: mykytaoksak/supabase_next_auth
-
+    rergistry_username: mykytaoksak
+    registry_password: 4e8b527e-ef9d-4426-9dd8-d50cb07251b2
 trigger:
   branch:
   - master

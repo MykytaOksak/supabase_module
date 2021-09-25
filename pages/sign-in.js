@@ -1,7 +1,8 @@
 /* pages/sign-in.js */
 import { useState } from 'react'
 import styles from '../styles/Home.module.scss'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faGoogle , } from '@fortawesome/free-brands-svg-icons'
 import { supabase } from '../client'
 
 export default function SignIn() {
@@ -14,7 +15,7 @@ export default function SignIn() {
 
 
     async function signUp() {
-        const { user, session, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email: email,
             password: password
         })
@@ -34,6 +35,16 @@ export default function SignIn() {
         } else {
             setLoggedIn(true)
         }
+    }
+    async function signWithGoogle() {
+        const { error } = supabase.auth.signIn({
+            provider:'google'
+        })
+        if (error) {
+            alert(error.message)
+        } else {
+            setLoggedIn(true)
+        } 
     }
     function linkClickHandle() {
         if(isSignIn) {
@@ -55,7 +66,7 @@ export default function SignIn() {
     if (loggedIn) {
         return (
             <div className={styles.container}>
-                <h1>Successfully logged in</h1>
+                <h1>Signing in...</h1>
             </div>
         )
     }
@@ -78,7 +89,19 @@ export default function SignIn() {
                         </h1>
                     )
                 }
-                <div className={styles.inputGroup}>
+                <button
+                    onClick={() => signWithGoogle()}
+                    className={styles.btnWhite}
+                    style={{ marginBottom: 0, marginTop: 30, position: "relative" }}>
+                    <FontAwesomeIcon 
+                        icon={faGoogle}
+                        style={{marginRight: 5}} />
+                    {' '}Sign in with Google
+                </button>
+                <p style={{marginTop: 20, fontWeight: 400, fontSize: '18px'}}>or</p>
+                <div 
+                    className={styles.inputGroup} 
+                    style={{marginTop: 0}}>
                     <label>Email</label>
                     <input
                         type="email"

@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../client'
 import { useRouter } from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
+import {  faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Home.module.scss'
 
 export default function Profile() {
@@ -11,9 +14,9 @@ export default function Profile() {
   const [lastName, setLastName] = useState("")
   const [country, setCountry] = useState("")
   const [city, setCity] = useState("")
-  const [user, setUser] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const router = useRouter()
+  const [photoIdSrc, setPhotoIdSrc] = useState('')
 
   async function fetchProfile() {
     const profileData = await supabase.auth.user()
@@ -63,14 +66,27 @@ export default function Profile() {
     }
   }
 
+  async function handlePhotoUpload(file) {    
+    const { data, error } = await supabase.storage
+      .from('kyc')
+      .upload(`id/${supabase.auth.user().id}.jpg`, file)
+
+    if (error)
+      console.log(error)
+    else 
+      setPhotoIdSrc(URL.createObjectURL(file))
+
+  }
+
   if (!profile) return null
   if (submitted) {
     return (
       <div className={styles.container}>
-          <h1>Information has been sent, await a response</h1>
+          <h1>Information successfully submitted</h1>
       </div>
     )
   }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -135,11 +151,39 @@ export default function Profile() {
             />
           </div>
 
+          <div className={styles.inputGroup} style={{marginTop: 25}}>
+            <label 
+              for="photo-upload"
+              className={styles.uploadLabel}>
+              {
+                photoIdSrc !== '' && (
+                  <FontAwesomeIcon icon={faCheckSquare} />
+                )
+              }
+              {
+                photoIdSrc === '' && (
+                  <FontAwesomeIcon icon={faCloudUploadAlt} />
+                )
+              }
+              {' '}Upload ID
+            </label>
+
+            <input
+              id="photo-upload"
+              type="file"
+              name="photo"
+              accept="image/*"
+              className={styles.inputImage}
+              onChange={e => handlePhotoUpload(e.target.files[0])}
+              required={true}/>
+          </div> 
+
+
           <button
-                  className={styles.btn}
-                  style={{"marginTop": 20}}
-                  type="submit">
-                  Submit
+            className={styles.btn}
+            style={{"marginTop": 20}}
+            type="submit">
+            Submit
           </button>
         </form>
       </main>

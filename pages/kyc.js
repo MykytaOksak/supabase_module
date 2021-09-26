@@ -153,7 +153,7 @@ export default function Profile() {
 
           <div className={styles.inputGroup} style={{marginTop: 25}}>
             <label 
-              for="photo-upload"
+              htmlFor="photo-upload"
               className={styles.uploadLabel}>
               {
                 photoIdSrc !== '' && (
